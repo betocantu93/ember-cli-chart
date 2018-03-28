@@ -8,7 +8,7 @@ module.exports = {
     'chart.js': {
       vendor: {
           srcDir: 'dist',
-          include: ['Chart.js'],
+          include: ['Chart.bundle.js'],
           processTree(input) {
             return FastbootTransform(input);
           }
@@ -20,7 +20,7 @@ module.exports = {
     this._super.included.apply(this, arguments);
     this._ensureThisImport();
 
-    this.import('vendor/chart.js/Chart.js');
+    this.import('vendor/chart.js/Chart.bundle.js');
   },
   _ensureThisImport() {
     if (!this.import) {
