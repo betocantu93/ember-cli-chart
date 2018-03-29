@@ -33,11 +33,13 @@ export default Ember.Component.extend({
   updateChart() {
     let chart   = this.get('chart');
     let data    = this.get('data');
+    let type    = this.get('type');    
     let options = this.get('options');
     let animate = this.get('animate');
 		
 		if (chart) {
 			chart.config.data = data;
+      chart.config.type = type;
 			chart.config.options = options;
 			if (animate) {
 				chart.update();
