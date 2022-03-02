@@ -1,51 +1,56 @@
 /* global Chart */
-import Ember from 'ember';
+import Component from '@ember/component';
 
-export default Ember.Component.extend({
+export default Component.extend({
   tagName: 'canvas',
   attributeBindings: ['width', 'height'],
 
   didInsertElement() {
     this._super(...arguments);
-    let context = this.get('element');
-    let data    = this.get('data');
-    let type    = this.get('type');
-    let options = this.get('options');
-		
+    let context = this.element;
+    let data = this.data;
+    let type = this.type;
+    let options = this.options;
+
     let chart = new Chart(context, {
       type: type,
       data: data,
-      options: options
+      options: options,
     });
+    this._register();
     this.set('chart', chart);
   },
 
   willDestroyElement() {
     this._super(...arguments);
-    this.get('chart').destroy();
+    this.chart.destroy();
   },
 
   didUpdateAttrs() {
     this._super(...arguments);
     this.updateChart();
   },
-  
+
+  _register() {
+    this.register?.(this);
+  },
+
   updateChart() {
-    let chart   = this.get('chart');
-    let data    = this.get('data');
-    let type    = this.get('type');    
-    let options = this.get('options');
-    let animate = this.get('animate');
-		
-		if (chart) {
-			chart.config.data = data;
+    let chart = this.chart;
+    let data = this.data;
+    let type = this.type;
+    let options = this.options;
+    let animate = this.animate;
+
+    if (chart) {
+      chart.config.data = data;
       chart.config.type = type;
-			chart.config.options = options;
-			if (animate) {
-				chart.update();
-			} else {
-				chart.update(0);
-			}
-		}
-  }
+      chart.config.options = options;
+      if (animate) {
+        chart.update();
+      } else {
+        chart.update(0);
+      }
+    }
+  },
 });
